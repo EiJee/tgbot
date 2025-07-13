@@ -1,7 +1,14 @@
 import sqlite3
 import datetime
+import os
 
-conn = sqlite3.connect('/data/fridge.db', check_same_thread=False)
+if os.getenv('RAILWAY') == '1':
+    os.makedirs('/data', exist_ok=True)  # <--- Важно!
+    db_path = '/data/fridge.db'
+else:
+    db_path = 'fridge.db'
+
+conn = sqlite3.connect(db_path, check_same_thread=False)
 
 cursor = conn.cursor()
 
