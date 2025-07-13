@@ -18,6 +18,15 @@ ALLOWED_USERS = {
 }
 
 
+def notify_shopping_updated():
+    for user_id in ALLOWED_USERS:
+        try:
+            bot.send_message(user_id, "📢 Обновлён список покупок.")
+        except Exception as e:
+            print(
+                f"Не удалось отправить сообщение пользователю {user_id}: {e}")
+
+
 def is_allowed(message):
     return message.chat.id in ALLOWED_USERS
 
@@ -117,6 +126,7 @@ def handle_text(message):
             reply = ""
             if added:
                 reply += f"✅ Добавлено: {', '.join(added)}\n"
+                notify_shopping_updated()
             if existed:
                 reply += f"⚠️ Уже есть: {', '.join(existed)}"
             bot.send_message(chat_id, reply.strip())
@@ -156,6 +166,7 @@ def handle_buy_or_delete(call):
                 call.id, f"{product} добавлен в холодильник.")
             bot.edit_message_text(
                 f"✅ {product} куплен и в холодильнике.", chat_id, call.message.message_id)
+            notify_shopping_updated()
         else:
             bot.answer_callback_query(call.id, f"{product} не найден.")
     elif action == "delete":
