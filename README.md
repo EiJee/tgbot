@@ -1,3 +1,5 @@
-# tgbot
-## Starting bot:
-python bot.py
+# Information
+## command for starting bot:
+```
+Python bot.py
+```
