@@ -1,7 +1,8 @@
 import sqlite3
 import datetime
 
-conn = sqlite3.connect('fridge.db', check_same_thread=False)
+conn = sqlite3.connect('/data/fridge.db', check_same_thread=False)
+
 cursor = conn.cursor()
 
 
@@ -18,7 +19,7 @@ def init_db():
 
 
 def add_product(name, in_fridge=False):
-    name = name.strip().lower()  # нормализуем имя
+    name = name.strip().lower()
     added_date = datetime.date.today().isoformat() if in_fridge else None
 
     try:
